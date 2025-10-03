@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX02 LESSON 02</title>
+</head>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+        function ProductDetails({ name, price, discountedPrice }) {
+            return(
+                <div>
+                    <p>{name}</p>
+                    {discountedPrice && (
+                        <>
+                            <p><del>Price: ${price}</del></p>
+                            <p>Discounted Price: ${discountedPrice}</p>
+                        </>
+                    )}
+                    {!discountedPrice && (
+                        <p>Price: ${price}</p>
+                    )}
+                    <button>Add to Cart</button>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <>
+                    <ProductDetails name="Cotton Socks" price="10.90" discountedPrice="5.45" />
+                    <ProductDetails name="Tennis Balls" price="6.00" />
+                    <ProductDetails name="Plain T-shirt" price="7.99" />
+                </>
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+        
+        
+    </script>
+</body>
+
+</html>
