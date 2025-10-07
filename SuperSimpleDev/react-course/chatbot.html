@@ -8,6 +8,8 @@
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
+            margin: 0px;
+
         }
         .send-button {
             background-color: rgb(25, 135, 84);
@@ -32,12 +34,23 @@
 
         .chat-input-container {
             display: flex;
-            margin: 20px 0px;
+            margin-bottom: 20px;
         }
 
         .app-container {
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
             max-width: 600px;
             margin: auto;
+            padding: 20px 0px;
+            height: 100vh;
+        }
+
+        .chat-messages-container {
+            flex-grow: 1;
+            overflow: scroll;
+            scrollbar-width: none;
         }
 
         .robot-message {
@@ -181,8 +194,20 @@
         
 
         function ChatMessages({ chatMessages }) {
+            const chatMessagesRef = React.useRef(null);
+
+            React.useEffect(() => {
+                const containerElem = chatMessagesRef.current;
+                if (containerElem) {
+                    containerElem.scrollTop = containerElem.scrollHeight;
+                }
+            }, [chatMessages]);
+
             return (
-                <>
+                <div
+                className="chat-messages-container"
+                ref={chatMessagesRef}
+                >
                     {chatMessages.map((chatMessage) => {
                         return (
                             <ChatMessage
@@ -192,7 +217,7 @@
                             />
                         );
                     })}
-                </>
+                </div>
             )
         }
 
