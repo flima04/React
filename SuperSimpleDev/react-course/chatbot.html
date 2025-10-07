@@ -19,12 +19,19 @@
     <script type="text/babel">
         function ChatInput({ chatMessages, setChatMessages }) {
             const [ inputText, setInputText ] = React.useState('');
+            const [ isLoading, setIsLoading ] = React.useState(false);
 
             function saveInputText() {
                 setInputText(event.target.value);
             }
 
-            function sendMessage() {
+            async function sendMessage() {
+                if (!inputText) {
+                    return;
+                } else if (isLoading == true) {
+                    return;
+                }
+
                 const newChatMessages = [
                     ...chatMessages,
                     {
@@ -34,9 +41,22 @@
                     }
                 ];
 
+                setInputText('');
+
                 setChatMessages(newChatMessages);
+
+                setChatMessages([
+                    ...newChatMessages,
+                    {
+                        message: 'Loading...',
+                        sender: 'robot',
+                        id: crypto.randomUUID()
+                    }
+                ]);
+
+                setIsLoading(true);
                 
-                const response = Chatbot.getResponse(inputText);
+                const response = await Chatbot.getResponseAsync(inputText);
                 setChatMessages([
                     ...newChatMessages,
                     {
@@ -46,7 +66,17 @@
                     }
                 ]);
 
-                setInputText('');
+                setIsLoading(false);
+
+            }
+
+            function checkKey(){
+                if (event.key == 'Enter') {
+                    sendMessage()
+                }
+                if(event.key == 'Escape') {
+                    setInputText('');
+                }
             }
 
             return (
@@ -55,6 +85,7 @@
                         placeholder="Send a message to ChatBot" 
                         size="50"
                         onChange={saveInputText}
+                        onKeyDown={checkKey}
                         value={inputText}
                     />
                     <button
