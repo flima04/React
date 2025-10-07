@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ex01-lesson03</title>
+    <style>
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 2rem;
+            color: cornflowerblue;
+        }
+    </style>
 </head>
 <body>
     <div class="js-container"></div>
@@ -13,11 +20,74 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
+
+        function InputName({ inputName, setInputName }) {
+            function saveInputName() {
+                setInputName(event.target.value);
+            }
+
+            return (
+                <input 
+                type="text"
+                placeholder="Type a name here"
+                onChange={saveInputName}
+                value={inputName} />
+            )
+        }
+
+        function Paragraph({ inputName }) {
+            return(
+                <p>Hello, {inputName}</p>
+            )
+        }
+
+        function Reset({ setInputName }) {
+            function resetInput() {
+                setInputName('');
+            }
+
+            return(
+                <button
+                    onClick={resetInput}
+                >Reset</button>
+            )
+        }
+
+        function Example({ setInputName }) {
+            function exampleInputName() {
+                setInputName('Beyoncé')
+            }
+
+            return(
+                <button
+                    onClick={exampleInputName}
+                >Example</button>
+            )
+        }
+
         function App() {
-            
+            const [ inputName, setInputName ] = React.useState('');
+
+            return (
+                <>
+                    <InputName
+                        inputName={inputName}
+                        setInputName={setInputName}
+                    />
+                    <Reset
+                        setInputName={setInputName}
+                    />
+                    <Example
+                        setInputName={setInputName}
+                    />
+                    <Paragraph
+                        inputName={inputName}
+                    />
+                </>
+            )
         }
         
-        const container = document.querySelectorAll(".js-container");
+        const container = document.querySelector(".js-container");
         ReactDOM.createRoot(container).render(<App />);
     </script>
     
