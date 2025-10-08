@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            color: grey;
+        }
+
+        input {
+            padding: 15px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            border-radius: 8px;
+            border-width: 1px;
+            width: 400px;
+        }
+
+        .login-page-button {
+            background-color: rgb(0, 123, 255);
+            color: white;
+            padding: 15px 20px;
+            margin-right: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+        function Welcome() {
+            return(
+                <h1>Welcome to my website! :D</h1>
+            );
+        }
+
+        function Input({ inputType, placeHolder }) {
+            return(
+                <input
+                    type={inputType}
+                    placeholder={placeHolder}
+                />
+            );
+        }
+
+        function ShowButton({ showPassword, setShowPassword }) {
+            function switchShow() {
+                setShowPassword(!showPassword);
+            }
+            return(
+                <button
+                    onClick={switchShow}
+                >{showPassword ? 'Hide' : 'Show'}</button>
+            );
+        }
+
+        function ButtonAuth({ buttonText }) {
+            return(
+                <button
+                    className="login-page-button"
+                >{buttonText}</button>
+            );
+        }
+
+        function Time() {
+            const [ time, setTime ] = React.useState(dayjs().format('HH:mm:ss'));
+
+            React.useEffect(() => {
+                setInterval(() => {
+                    console.log('run code')
+                    setTime(dayjs().format('HH:mm:ss'))
+                }, 1000)
+            },[])
+
+            return(
+                <p>Current time: {time}</p>
+            )
+        }
+
+        function App() {
+            const [ showPassword, setShowPassword ] = React.useState(false);
+
+            return(
+                <>
+                    <Welcome />
+                    <Input
+                        inputType="email"
+                        placeHolder="Email"
+                    />
+                    <div>
+                        <Input
+                            inputType={!showPassword ? 'password' : 'text'}
+                            placeHolder="Password"
+                        />
+                        <ShowButton
+                            showPassword={showPassword}
+                            setShowPassword={setShowPassword}
+                        />
+                    </div>
+                    
+                    <ButtonAuth 
+                        buttonText="Login"
+                    />
+                    <ButtonAuth 
+                        buttonText="Sign up"
+                    />
+                    <Time />
+                </>
+            );
+        }
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+</html>
