@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ex04-lesson04</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .js-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            background-color: rgb(25, 135, 84);
+            color: white;
+            padding: 10px 15px;
+            border-width: 0;
+            margin: 5px;
+
+        }
+    </style>
 </head>
 <body>
     <div class="js-container"></div>
@@ -32,7 +53,7 @@
 
             function toggleAutoClick() {
                 setIsAutoClicking(!isAutoClicking);
-                
+
                 if (intervalRef.current) {
                     clearInterval(intervalRef.current);
                     intervalRef.current = null;
@@ -55,7 +76,7 @@
             }
 
             return(
-                <>
+                <div className="">
                     <button
                         onClick={increaseCount}
                         ref={buttonRef}
@@ -66,7 +87,7 @@
                     <button
                         onClick={toggleAutoClick}
                     >{isAutoClicking ? 'Stop auto click' : 'Auto click'}</button>
-                </>
+                </div>
             );
             
         }
