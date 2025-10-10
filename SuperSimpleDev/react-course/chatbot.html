@@ -9,7 +9,11 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0px;
+        }
 
+        .welcome-message {
+            text-align: center;
+            color: grey;
         }
         .send-button {
             background-color: rgb(25, 135, 84);
@@ -34,7 +38,7 @@
 
         .chat-input-container {
             display: flex;
-            margin-bottom: 20px;
+            margin-bottom: 60px;
         }
 
         .app-container {
@@ -77,6 +81,15 @@
         .message-icon {
             width: 50px;
         }
+
+        .loading-spinner {
+            width: 40px;
+            margin: -15px;
+        }
+
+        .hiden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -90,6 +103,14 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
+        function WelcomeMessage() {
+                return(
+                    <p className="welcome-message">
+                        Welcome to the ChatBot project! send a message using the textbox bellow
+                    </p>
+                )
+            }
+
         function ChatInput({ chatMessages, setChatMessages }) {
             const [ inputText, setInputText ] = React.useState('');
             const [ isLoading, setIsLoading ] = React.useState(false);
@@ -121,7 +142,7 @@
                 setChatMessages([
                     ...newChatMessages,
                     {
-                        message: 'Loading...',
+                        message: <img src="loading-spinner.gif" alt="loading" className="loading-spinner"/>,
                         sender: 'robot',
                         id: crypto.randomUUID()
                     }
@@ -222,34 +243,20 @@
         }
 
         function App() {
-            const [ chatMessages, setChatMessages ] = React.useState([{
-                message: 'hello, chatbot',
-                sender: 'user',
-                id: 'id01'
-            }, {
-                message: 'Hello! How can I help you?',
-                sender: 'robot',
-                id: 'id02'
-            }, {
-                message: 'can you get me todays date?',
-                sender: 'user',
-                id: 'id03'
-            }, {
-                message: 'Today is september 25.',
-                sender: 'robot',
-                id: 'id04'
-            }]);
+            const [ chatMessages, setChatMessages ] = React.useState([]);
 
             return (
                 <div className="app-container">
-                    <ChatInput
-                        chatMessages={chatMessages}
-                        setChatMessages={setChatMessages}
+                    <WelcomeMessage
+                        className={chatMessages.length === 0 ? "welcome-message" : "hidden"}
                     />
                     <ChatMessages
                         chatMessages={chatMessages}
                     />
-                    
+                    <ChatInput
+                        chatMessages={chatMessages}
+                        setChatMessages={setChatMessages}
+                    />
                 </div>
             );
         }
