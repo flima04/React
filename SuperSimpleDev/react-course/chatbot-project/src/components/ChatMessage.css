@@ -1,0 +1,35 @@
+.robot-message {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.user-message {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.text-message {
+  background-color: rgb(231, 231, 231);
+  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin: 10px;
+  max-width: 300px;
+}
+
+.text-message-time {
+  font-size: 0.7rem;
+  color: gray;
+  margin-top: 5px;
+}
+
+.message-icon {
+  width: 50px;
+}
+
+.loading-spinner {
+  width: 40px;
+  margin: -15px;
+}
